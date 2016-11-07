@@ -39,7 +39,7 @@
   <ItemGroup>
     <Reference Include="gdal_csharp, Version=1.0.5170.15071, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\GDAL\csharp\gdal_csharp.dll</HintPath>
+      <HintPath>..\lib\gdal_csharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SQLServer.DTSPipelineWrap, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -61,11 +61,11 @@
     </Reference>
     <Reference Include="ogr_csharp, Version=1.0.5170.15071, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\GDAL\csharp\ogr_csharp.dll</HintPath>
+      <HintPath>..\lib\ogr_csharp.dll</HintPath>
     </Reference>
     <Reference Include="osr_csharp, Version=1.0.5170.15069, Culture=neutral, PublicKeyToken=db5a52b08dc5b321, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\GDAL\csharp\osr_csharp.dll</HintPath>
+      <HintPath>..\lib\osr_csharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

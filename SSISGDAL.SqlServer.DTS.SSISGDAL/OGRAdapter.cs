@@ -70,6 +70,9 @@ namespace SSISGDAL.SqlServer.DTS.SSISGDAL
                 case FieldType.OFTInteger:
                     BufferDataType = DataType.DT_I4;
                     break;
+                case FieldType.OFTInteger64:
+                    BufferDataType = DataType.DT_I8;
+                    break;
                 case FieldType.OFTReal:
                     BufferDataType = DataType.DT_R8;
                     break;

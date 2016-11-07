@@ -13,6 +13,7 @@ namespace SSISGDAL.SqlServer.DTS.Pipeline
 
     [DtsPipelineComponent(
         DisplayName = "OGR Source",
+        CurrentVersion = 1,
         ComponentType =   ComponentType.SourceAdapter,
         IconResource = "SSISGDAL.SqlServer.DTS.Pipeline.SSISGDAL.ico"
     )]
@@ -21,6 +22,17 @@ namespace SSISGDAL.SqlServer.DTS.Pipeline
         private bool cancel;
         private int errorOutputID = -1;
         private int errorOutputIndex = -1;
+
+        public override void PerformUpgrade(int pipelineVersion)
+        {
+            // http://toddmcdermid.blogspot.co.nz/2008/09/using-performupgrade.html
+            DtsPipelineComponentAttribute componentAttribute = (DtsPipelineComponentAttribute)Attribute.GetCustomAttribute(this.GetType(), typeof(DtsPipelineComponentAttribute), false);
+            int binaryVersion = componentAttribute.CurrentVersion;      // from DLL
+            int metadataVersion = ComponentMetaData.Version;            // from dtsx XML
+
+            //base.PerformUpgrade(pipelineVersion);
+            ComponentMetaData.Version = binaryVersion;
+        }
 
         public override void ProvideComponentProperties()
         {
@@ -366,7 +378,8 @@ namespace SSISGDAL.SqlServer.DTS.Pipeline
                             FieldType OGRFieldType = OGRFieldDef.GetFieldType();
                             
                             //declare datetime variables
-                            int pnYear, pnMonth, pnDay, pnHour, pnMinute, pnSecond, pnTZFlag;
+                            int pnYear, pnMonth, pnDay, pnHour, pnMinute, pnTZFlag;
+                            float pnSecond;
                             DateTime dt;
                             TimeSpan ts;
 
@@ -381,19 +394,22 @@ namespace SSISGDAL.SqlServer.DTS.Pipeline
                                     break;
                                 case FieldType.OFTDateTime:
                                     OGRFeature.GetFieldAsDateTime(OGRFieldIndex, out pnYear, out pnMonth, out pnDay, out pnHour, out pnMinute, out pnSecond, out pnTZFlag);
-                                    dt = new DateTime(pnYear,pnMonth,pnDay,pnHour,pnMinute,pnSecond);
+                                    dt = new DateTime(pnYear,pnMonth,pnDay,pnHour,pnMinute,(int)pnSecond);
                                     //set time zone?
                                     defaultBuffer.SetDateTime(ci.bufferColumnIndex, dt);
                                     break;
                                 case FieldType.OFTInteger:
                                     defaultBuffer.SetInt32(ci.bufferColumnIndex, OGRFeature.GetFieldAsInteger(OGRFieldIndex));
                                     break;
+                                case FieldType.OFTInteger64:
+                                    defaultBuffer.SetInt64(ci.bufferColumnIndex, OGRFeature.GetFieldAsInteger(OGRFieldIndex));
+                                    break;
                                 case FieldType.OFTReal:
                                     defaultBuffer.SetDouble(ci.bufferColumnIndex, OGRFeature.GetFieldAsDouble(OGRFieldIndex));
                                     break;
                                 case FieldType.OFTTime:
                                     OGRFeature.GetFieldAsDateTime(OGRFieldIndex, out pnYear, out pnMonth, out pnDay, out pnHour, out pnMinute, out pnSecond, out pnTZFlag);
-                                    ts = new TimeSpan(pnHour,pnMinute,pnSecond);
+                                    ts = new TimeSpan(pnHour,pnMinute,(int)pnSecond);
                                     defaultBuffer.SetTime(ci.bufferColumnIndex, ts);
                                     break;
                                 case FieldType.OFTString:

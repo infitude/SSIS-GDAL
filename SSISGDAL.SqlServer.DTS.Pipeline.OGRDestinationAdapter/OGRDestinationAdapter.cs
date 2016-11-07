@@ -12,6 +12,7 @@ namespace SSISGDAL.SqlServer.DTS.Pipeline
 {
     [DtsPipelineComponent(
         DisplayName = "OGR Destination",
+        CurrentVersion = 1,
         ComponentType = ComponentType.DestinationAdapter,
         IconResource = "SSISGDAL.SqlServer.DTS.Pipeline.SSISGDAL.ico"
     )]
@@ -20,6 +21,17 @@ namespace SSISGDAL.SqlServer.DTS.Pipeline
         private bool cancel;
         private bool validExternalMetadata = true;
         private int batchSize;
+
+        public override void PerformUpgrade(int pipelineVersion)
+        {
+            // http://toddmcdermid.blogspot.co.nz/2008/09/using-performupgrade.html
+            DtsPipelineComponentAttribute componentAttribute = (DtsPipelineComponentAttribute)Attribute.GetCustomAttribute(this.GetType(), typeof(DtsPipelineComponentAttribute), false);
+            int binaryVersion = componentAttribute.CurrentVersion;      // from DLL
+            int metadataVersion = ComponentMetaData.Version;            // from dtsx XML
+
+            //base.PerformUpgrade(pipelineVersion);
+            ComponentMetaData.Version = binaryVersion;
+        }
 
         public override void ProvideComponentProperties()
         {
@@ -336,6 +348,9 @@ namespace SSISGDAL.SqlServer.DTS.Pipeline
                                         break;
                                     case FieldType.OFTInteger:
                                         OGRFeature.SetField(OGRFieldIndex, buffer.GetInt32(ci.bufferColumnIndex));
+                                        break;
+                                    case FieldType.OFTInteger64:
+                                        OGRFeature.SetField(OGRFieldIndex, buffer.GetInt64(ci.bufferColumnIndex));
                                         break;
                                     case FieldType.OFTReal:
                                         OGRFeature.SetField(OGRFieldIndex, buffer.GetDouble(ci.bufferColumnIndex));
