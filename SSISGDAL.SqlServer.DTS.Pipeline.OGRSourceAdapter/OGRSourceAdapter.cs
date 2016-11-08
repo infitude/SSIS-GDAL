@@ -221,7 +221,8 @@ namespace SSISGDAL.SqlServer.DTS.Pipeline
                             //check for length == 0
                             if (length == 0)
                             {
-                                BufferDataType = DataType.DT_NTEXT;
+                                //BufferDataType = DataType.DT_NTEXT;
+                                length = 4000;
                             }
                             break;
                         default:

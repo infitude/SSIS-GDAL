@@ -65,7 +65,7 @@ namespace SSISGDAL.SqlServer.DTS.SSISGDAL
                     BufferDataType = DataType.DT_DBDATE;
                     break;
                 case FieldType.OFTDateTime:
-                    BufferDataType = DataType.DT_DBTIMESTAMP;
+                    BufferDataType = DataType.DT_DATE;  //.DT_DBTIMESTAMP;
                     break;
                 case FieldType.OFTInteger:
                     BufferDataType = DataType.DT_I4;
@@ -83,7 +83,8 @@ namespace SSISGDAL.SqlServer.DTS.SSISGDAL
                     BufferDataType = DataType.DT_DBTIME;
                     break;
                 default:
-                    BufferDataType = DataType.DT_NTEXT;
+                    //BufferDataType = DataType.DT_NTEXT;
+                    BufferDataType = DataType.DT_WSTR;
                     break;
             }
 
