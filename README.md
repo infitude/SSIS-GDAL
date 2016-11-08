@@ -1,7 +1,7 @@
 SSIS-GDAL
 =========
 
-GDAL components for SQL Server Ingetration Services
+GDAL components for SQL Server Integration Services
 
 ![alt tag](http://download-codeplex.sec.s-msft.com/Download?ProjectName=GDALSSIS&DownloadId=602441)
 
@@ -9,9 +9,9 @@ GDAL components for SQL Server Ingetration Services
 Requirements
 ------------
 
-* Visual Studio 2012
+* Visual Studio 2015
 * SQL Server Data Tools
-* GDAL >= 1.9
+* GDAL >= 2.0.1
 
 
 Build
@@ -28,5 +28,19 @@ Build:
 Install:
 
     msbuild.exe build.targets /t:install
+
+Uninstall:
+
+    msbuild.exe build.targets /t:uninstall
     
 If you have issues check build.targets and make sure the properties are set correctly for your environment  
+
+
+Installer Project
+-----------------
+
+
+* Requires InstallShield Limited Edition
+
+
+Use this to install SSIS-GDAL DLL's into the GAC and pre-build GDAL (2.0.1) and CSharp interop DLL's into the Windows folder.
